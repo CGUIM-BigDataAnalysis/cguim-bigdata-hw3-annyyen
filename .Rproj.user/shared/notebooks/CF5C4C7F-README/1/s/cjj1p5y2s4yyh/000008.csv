@@ -1,0 +1,42 @@
+"0","#é€™æ˜¯R Code Chunk"
+"0","install.packages(""rvest"")"
+"2","Installing package into ¡¥C:/Users/user/Documents/R/win-library/3.3¡¦
+(as ¡¥lib¡¦ is unspecified)
+"
+"2","trying URL 'https://cran.rstudio.com/bin/windows/contrib/3.3/rvest_0.3.2.zip'
+"
+"2","Content type 'application/zip'"
+"2"," length 853331 bytes (833 KB)
+"
+"2","downloaded 833 KB
+
+"
+"1","package â€˜rvestâ€™ successfully unpacked and MD5 sums checked
+"
+"1","
+"
+"1","The downloaded binary packages are in
+	C:\Users\user\AppData\Local\Temp\RtmpUHqrjQ\downloaded_packages"
+"1","
+"
+"0","library(rvest) ##ç¬¬ä¸€æ¬¡ä½¿ç”¨è¦å…ˆå®‰è£ install.packages(""rvest"")"
+"2","package ¡¥rvest¡¦ was built under R version 3.3.3"
+"2","Loading required package: xml2
+"
+"2","package ¡¥xml2¡¦ was built under R version 3.3.3"
+"0","PTT <- read_html(""https://www.ptt.cc/bbs/NBA/index.html"")"
+"0","btnURL <- PTT %>% html_nodes(""a[class='btn wide']"") %>% html_attr(""href"")"
+"0","indexNum <- as.numeric(gsub(""/bbs/NBA/index|.html"","""",btnURL[2]))"
+"0","totalPage<-NULL"
+"0","for (i in (indexNum-4):(indexNum+1)){"
+"0","PTT = paste(""https://www.ptt.cc/bbs/NBA/index"",i,"".html"",sep="""")"
+"0","Title <- read_html(PTT) %>% html_nodes("".title"") %>% html_text()"
+"0","PushNum <- read_html(PTT) %>% html_nodes("".nrec"") %>% html_text()"
+"0","Author <- read_html(PTT) %>% html_nodes("".author"") %>% html_text()"
+"0","tempPage <- data.frame(Title, PushNum, Author)"
+"0","totalPage <- rbind(totalPage, tempPage)"
+"0","}"
+"0","View(totalPage)"
+"0","##read_html"
+"0","##html_nodes"
+"0","##html_text"

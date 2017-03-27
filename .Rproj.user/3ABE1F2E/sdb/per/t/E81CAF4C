@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "---\ntitle: \"長庚大學 大數據分析方法 作業三\"\noutput: github_document\n---\n\n\n## 網站資料爬取\n```{r}\n#這是R Code Chunk\n#install.packages(\"rvest\")\nlibrary(rvest) ##第一次使用要先安裝 install.packages(\"rvest\")\n\nPTT <- read_html(\"https://www.ptt.cc/bbs/NBA/index.html\")\nbtnURL <- PTT %>% html_nodes(\"a[class='btn wide']\") %>% html_attr(\"href\")\nindexNum <- as.numeric(gsub(\"/bbs/NBA/index|.html\",\"\",btnURL[2]))\n\ntotalPage<-NULL\nfor (i in (indexNum-4):(indexNum+1)){\nPTT = paste(\"https://www.ptt.cc/bbs/NBA/index\",i,\".html\",sep=\"\")\nTitle <- read_html(PTT) %>% html_nodes(\".title\") %>% html_text()\nPushNum <- read_html(PTT) %>% html_nodes(\".nrec\") %>% html_text()\nAuthor <- read_html(PTT) %>% html_nodes(\".author\") %>% html_text()\ntempPage <- data.frame(Title, PushNum, Author)\ntotalPage <- rbind(totalPage, tempPage)\n}\nView(totalPage)\n\n\n\n##read_html\n##html_nodes\n##html_text\n```\n\n## 爬蟲結果呈現\n```{r}\n#這是R Code Chunk\nknitr::kable(totalPage) ##請將iris取代為上個步驟中產生的爬蟲資料資料框\n```\n\n## 解釋爬蟲結果 \n```{r}\n#這是R Code Chunk\n\ndim(totalPage)\nnrow(totalPage)\nstr(totalPage)\n\n```\n\n\n共爬出幾篇文章標題?\nAns: 2017/03/27抓到了122個標題('data.frame':\t122 obs. of  3 variables)\n\n\n```{r}\n#這是R Code Chunk\n\ntable(totalPage$Author)\nmax(table(totalPage$Author))\n\n```\n\n哪個作者文章數最多？\nAns: 2017/03/27抓到的資料是Rambo有最多文章，有28篇。\n\n有趣的現象\nAns: 以NBA看板為例，大約平均一天會有三頁資料，相當於每天有60筆資料。\n我觀察到有趣的現象是大家好像比較少在別人的文章留言，都直接另外發一篇Re:XXXXX，可能大家喜歡自己當作者。\n",
+    "created" : 1490006087506.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3899401041",
+    "id" : "E81CAF4C",
+    "lastKnownWriteTime" : 1490608177,
+    "last_content_update" : 1490608177968,
+    "path" : "~/GitHub/cguim-bigdata-hw3-annyyen/README.Rmd",
+    "project_path" : "README.Rmd",
+    "properties" : {
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}
